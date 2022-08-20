@@ -53,14 +53,19 @@ After provision beanstalk console will be available at [http://localhost:7654](h
 
 ### Run as a Docker container
 
+    docker run -d --restart=always -p "80:80" \
+        -e APACHE_PORT=80 \
+        -e 'BEANSTALKD_HOST=beanstalkd' \
+        -e 'BEANSTALKD_PORT=11300' \
+        --name beanstalk_console \
+        agaveapi/beanstalkd-console
+
+### Build and Run Docker container from git source
+
 Install [Docker](https://docs.docker.com/installation/) then build and run with the following command (from project root):
 
     docker build --rm -t beanstalk_console .
     docker run -d -p "80:80" --name beanstalk_console beanstalk_console
-
-If you would rather just run the existing automated build of this project, run (from project root):
-
-    docker run -d -p "80:80" -e APACHE_PORT=80 --name beanstalk_console agaveapi/beanstalkd-console
 
 To configure webapp with a custom beanstalk server to load at runtime, set the `BEANSTALKD_HOST` and `BEANSTALKD_PORT` environment variables.
 
